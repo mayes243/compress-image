@@ -19,13 +19,14 @@
 
     <div id="compressed-message" <% if (!isCompressed) { %>
       style="display: none;"<% } %>>
-      <p>Your image has been magically compressed and saved! ✨</p>
       <button id="compress-another">Compress Another</button>
+      <p>Your image has been magically compressed and saved! ✨</p>
     </div>
 
     <script>
       document.getElementById("compress-another").addEventListener("click", function () {
         // Hide the compressed message and show the form
+        window.location.href = "/";
         document.getElementById("compressed-message").style.display = "none";
         document.getElementById("compress-form").style.display = "block";
       });
