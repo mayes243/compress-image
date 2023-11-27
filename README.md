@@ -19,3 +19,12 @@ This is a web application built with Node.js and Express for compressing images 
    ```bash
    git clone https://github.com/mayes243/compress-image.git
    ```
+
+# Deployed Links
+
+You can also access the deployed application at the following links:
+
+(https://compress-image-chi.vercel.app/)
+(https://compress-image-mayes243.vercel.app/)
+(https://compress-image-git-main-mayes243.vercel.app/)
+(https://compress-image-i2kdipyiq-mayes243.vercel.app/)
