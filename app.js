@@ -1,12 +1,11 @@
-import express from "express";
-import compressImages from "compress-images";
-import formidable from "express-formidable";
-import fileSystem from "fs";
-
+const express = require("express");
 const app = express();
 
+const compressImages = require("compress-images");
+const formidable = require("express-formidable");
 app.use(formidable());
 
+const fileSystem = require("fs");
 app.set("view engine", "ejs");
 
 app.use(express.static("public"));
@@ -84,5 +83,3 @@ app.post("/compressImage", function (request, result) {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Server running on port: http://localhost:${port}`));
-
-export default app;
