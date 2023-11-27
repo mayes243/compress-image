@@ -12,7 +12,7 @@ const tempDir = os.tmpdir();
 
 app.use(express.static("public"));
 
-app.set("views", __dirname + "/views");
+// app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
 app.get("/", function (request, result) {
