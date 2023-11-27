@@ -8,6 +8,8 @@ app.use(formidable());
 const fileSystem = require("fs");
 app.set("view engine", "ejs");
 
+app.use(express.static("public"));
+
 app.get("/", function (request, result) {
   const isCompressed = false;
   result.render("index", { isCompressed });

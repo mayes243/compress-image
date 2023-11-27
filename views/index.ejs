@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Compress image</title>
+    <title>Image Magic: Compressify</title>
+    <link rel="stylesheet" href="/style.css" />
   </head>
-
   <body>
+    <h1>🚀 Image Compression Magic 🚀</h1>
+
     <div id="compress-form" <% if (isCompressed) { %>
       style="display: none;"<% } %>>
       <form method="POST" action="/compressImage" enctype="multipart/form-data">
         <input type="file" name="image" accept="image/*" required />
-        <input type="submit" value="Compress image" />
+        <input type="submit" value="Compress Image" />
       </form>
     </div>
 
     <div id="compressed-message" <% if (!isCompressed) { %>
       style="display: none;"<% } %>>
+      <p>Your image has been magically compressed and saved! ✨</p>
       <button id="compress-another">Compress Another</button>
     </div>
 
