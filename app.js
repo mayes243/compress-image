@@ -6,6 +6,7 @@ const formidable = require("express-formidable");
 app.use(formidable());
 
 const fileSystem = require("fs");
+app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
 app.use(express.static("public"));
@@ -65,7 +66,6 @@ app.post("/compressImage", function (request, result) {
             }
           );
           result.render("index", { isCompressed: true });
-          //   result.send("File has been compressed and saved.");
         });
 
         fileSystem.unlink(image.path, function (error) {
