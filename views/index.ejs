@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Compress image</title>
+  </head>
+
+  <body>
+    <div id="compress-form" <% if (isCompressed) { %>
+      style="display: none;"<% } %>>
+      <form method="POST" action="/compressImage" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required />
+        <input type="submit" value="Compress image" />
+      </form>
+    </div>
+
+    <div id="compressed-message" <% if (!isCompressed) { %>
+      style="display: none;"<% } %>>
+      <button id="compress-another">Compress Another</button>
+    </div>
+
+    <script>
+      document.getElementById("compress-another").addEventListener("click", function () {
+        // Hide the compressed message and show the form
+        document.getElementById("compressed-message").style.display = "none";
+        document.getElementById("compress-form").style.display = "block";
+      });
+    </script>
+  </body>
+</html>
