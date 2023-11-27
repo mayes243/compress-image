@@ -1,15 +1,17 @@
 const express = require("express");
-const app = express();
 
 const compressImages = require("compress-images");
 const formidable = require("express-formidable");
+const fileSystem = require("fs");
+
+const app = express();
+
 app.use(formidable());
 
-const fileSystem = require("fs");
+app.use(express.static("public"));
+
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
-
-app.use(express.static("public"));
 
 app.get("/", function (request, result) {
   const isCompressed = false;
