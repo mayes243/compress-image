@@ -3,10 +3,12 @@ const express = require("express");
 const compressImages = require("compress-images");
 const formidable = require("express-formidable");
 const fileSystem = require("fs");
+const os = require("os");
 
 const app = express();
 
 app.use(formidable());
+const tempDir = os.tmpdir();
 
 app.use(express.static("public"));
 
@@ -25,17 +27,18 @@ app.post("/compressImage", function (request, result) {
       fileSystem.readFile(image.path, function (error, data) {
         if (error) throw error;
 
-        const filePath = "temp-uploads/" + new Date().getTime() + "-" + image.name;
         const compressedFilePath = "uploads/";
         const compression = 60;
 
-        // Ensure temp-uploads and uploads directory exists
-        if (!fileSystem.existsSync("temp-uploads")) {
-          fileSystem.mkdirSync("temp-uploads");
+        const filePath = tempDir + "/temp-uploads/" + new Date().getTime() + "-" + image.name;
+
+        // Ensure temp-uploads directory exists
+        if (!fileSystem.existsSync(tempDir + "/temp-uploads")) {
+          fileSystem.mkdirSync(tempDir + "/temp-uploads");
         }
 
-        if (!fileSystem.existsSync("uploads")) {
-          fileSystem.mkdirSync("uploads");
+        if (!fileSystem.existsSync(tempDir + "/uploads")) {
+          fileSystem.mkdirSync(tempDir + "/uploads");
         }
 
         fileSystem.writeFile(filePath, data, async function (error) {
