@@ -5,7 +5,7 @@ This is a web application built with Node.js and Express for compressing images 
 ## Features
 
 - Image compression with configurable quality settings.
-- Basic web interface for uploading and compressing images.
+- Web interface for uploading and compressing images.
 - User-friendly interface with the ability to compress another image.
 
 ## Requirements
