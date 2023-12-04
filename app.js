@@ -41,7 +41,7 @@ app.post("/compressImage", function (request, result) {
       fileSystem.readFile(image.path, function (error, data) {
         if (error) throw error;
 
-        const compressedFilePath = os.tmpdir() + "uploads/";
+        const compressedFilePath = os.tmpdir() + "/uploads/";
         const compression = 60;
 
         const filePath = tempDir + "/temp-uploads/" + new Date().getTime() + "-" + image.name;
