@@ -83,8 +83,9 @@ app.post("/compressImage", function (request, result) {
               fileSystem.unlink(filePath, function (error) {
                 if (error) throw error;
               });
+              const compressedImagePath = path.join(compressedFilePath, statistic.path_out_new);
               result.redirect(
-                `/?isCompressed=true&compressedPath=${statistic.path_out_new}&originalSize=${statistic.size_in}&compressedSize=${statistic.size_output}&percent=${statistic.percent}`
+                `/?isCompressed=true&compressedPath=${compressedImagePath}&originalSize=${statistic.size_in}&compressedSize=${statistic.size_output}&percent=${statistic.percent}`
               );
             }
           );
