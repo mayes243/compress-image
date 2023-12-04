@@ -14,14 +14,15 @@ app.use(formidable({ maxFileSize: maxSize }));
 const tempDir = os.tmpdir();
 
 app.use(express.static(__dirname + "/public"));
-app.use(express.static(__dirname + "/uploads"));
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
+app.use("/public", express.static(path.resolve()));
+
 app.get("/", function (request, result) {
   const isCompressed = request.query.isCompressed === "true";
-  const compressedImagePath = request.query.compressedPath;
+  const compressedImagePath = "public/" + request.query.compressedPath;
   const originalSize = request.query.originalSize;
   const compressedSize = request.query.compressedSize;
   const percent = request.query.percent;
@@ -42,7 +43,7 @@ app.post("/compressImage", function (request, result) {
       fileSystem.readFile(image.path, function (error, data) {
         if (error) throw error;
 
-        const compressedFilePath = os.tmpdir() + "/uploads/";
+        const compressedFilePath = "uploads/";
         const compression = 60;
 
         const filePath = tempDir + "/temp-uploads/" + new Date().getTime() + "-" + image.name;
@@ -83,9 +84,8 @@ app.post("/compressImage", function (request, result) {
               fileSystem.unlink(filePath, function (error) {
                 if (error) throw error;
               });
-              const compressedImagePath = path.join(statistic.path_out_new);
               result.redirect(
-                `/?isCompressed=true&compressedPath=${compressedImagePath}&originalSize=${statistic.size_in}&compressedSize=${statistic.size_output}&percent=${statistic.percent}`
+                `/?isCompressed=true&compressedPath=${statistic.path_out_new}&originalSize=${statistic.size_in}&compressedSize=${statistic.size_output}&percent=${statistic.percent}`
               );
             }
           );
