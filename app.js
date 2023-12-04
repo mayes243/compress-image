@@ -2,16 +2,13 @@ const express = require("express");
 
 const compressImages = require("compress-images");
 const formidable = require("express-formidable");
-const fileSystem = require("fs");
-const os = require("os");
+const fs = require("fs");
 const path = require("path");
 
 const app = express();
 
 const maxSize = 10 * 1024 * 1024; // 10 MB
 app.use(formidable({ maxFileSize: maxSize }));
-
-const tempDir = os.tmpdir();
 
 app.use(express.static(__dirname + "/public"));
 
@@ -36,28 +33,28 @@ app.get("/", function (req, res) {
   });
 });
 
-app.post("/compressImage", function (req, res) {
+app.post("/compress-image", function (req, res) {
   const image = req.files.image;
   if (image.size > 0) {
     if (image.type == "image/png" || image.type == "image/jpeg") {
-      fileSystem.readFile(image.path, function (error, data) {
+      fs.readFile(image.path, function (error, data) {
         if (error) throw error;
 
         const compressedFilePath = "uploads/";
         const compression = 60;
 
-        const filePath = tempDir + "/temp-uploads/" + new Date().getTime() + "-" + image.name;
+        const filePath = "/temp-uploads/" + new Date().getTime() + "-" + image.name;
 
         // Ensure temp-uploads directory exists
-        if (!fileSystem.existsSync(tempDir + "/temp-uploads")) {
-          fileSystem.mkdirSync(tempDir + "/temp-uploads");
+        if (!fs.existsSync("/temp-uploads")) {
+          fs.mkdirSync("/temp-uploads");
         }
 
-        if (!fileSystem.existsSync(tempDir + "/uploads")) {
-          fileSystem.mkdirSync(tempDir + "/uploads");
+        if (!fs.existsSync("/uploads")) {
+          fs.mkdirSync("/uploads");
         }
 
-        fileSystem.writeFile(filePath, data, async function (error) {
+        fs.writeFile(filePath, data, async function (error) {
           if (error) throw error;
 
           compressImages(
@@ -81,7 +78,7 @@ app.post("/compressImage", function (req, res) {
               console.log(statistic);
               console.log("-------------");
 
-              fileSystem.unlink(filePath, function (error) {
+              fs.unlink(filePath, function (error) {
                 if (error) throw error;
               });
               res.redirect(
@@ -91,7 +88,7 @@ app.post("/compressImage", function (req, res) {
           );
         });
 
-        fileSystem.unlink(image.path, function (error) {
+        fs.unlink(image.path, function (error) {
           if (error) throw error;
         });
       });
