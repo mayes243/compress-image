@@ -4,6 +4,7 @@ const compressImages = require("compress-images");
 const formidable = require("express-formidable");
 const fileSystem = require("fs");
 const os = require("os");
+const path = require("path");
 
 const app = express();
 
@@ -15,9 +16,22 @@ app.use(express.static(__dirname + "/public"));
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
+app.use("/public", express.static(path.resolve()));
+
 app.get("/", function (request, result) {
-  const isCompressed = false;
-  result.render("index", { isCompressed });
+  const isCompressed = request.query.isCompressed === "true";
+  const compressedImagePath = "public/" + request.query.compressedPath;
+  const originalSize = request.query.originalSize;
+  const compressedSize = request.query.compressedSize;
+  const percent = request.query.percent;
+
+  result.render("index", {
+    isCompressed,
+    compressedImagePath,
+    originalSize,
+    compressedSize,
+    percent,
+  });
 });
 
 app.post("/compressImage", function (request, result) {
@@ -68,9 +82,11 @@ app.post("/compressImage", function (request, result) {
               fileSystem.unlink(filePath, function (error) {
                 if (error) throw error;
               });
+              result.redirect(
+                `/?isCompressed=true&compressedPath=${statistic.path_out_new}&originalSize=${statistic.size_in}&compressedSize=${statistic.size_output}&percent=${statistic.percent}`
+              );
             }
           );
-          result.render("index", { isCompressed: true });
         });
 
         fileSystem.unlink(image.path, function (error) {

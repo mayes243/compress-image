@@ -7,7 +7,23 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <h1>🚀 Image Compression Magic 🚀</h1>
+    <h2>🚀 Image Compression Magic 🚀</h2>
+
+    <div id="compressed-message" <% if (!isCompressed) { %>
+      style="display: none;"<% } %>>
+
+      <!-- Display information about the compressed image -->
+      <p>Original Size: <%= originalSize %> bytes</p>
+      <p>Compressed Size: <%= compressedSize %> bytes</p>
+      <p>Compression Percent: <%= percent %> %</p>
+      <img
+        src="<%= compressedImagePath %>"
+        alt="Compressed Image"
+        style="max-width: 100%; height: 300px; border-radius: 8px; object-fit: cover"
+      />
+      <p>Your image has been magically compressed and saved! ✨</p>
+      <button id="compress-another">Compress Another</button>
+    </div>
 
     <div id="compress-form" <% if (isCompressed) { %>
       style="display: none;"<% } %>>
@@ -15,12 +31,6 @@
         <input type="file" name="image" accept="image/*" required />
         <input type="submit" value="Compress Image" />
       </form>
-    </div>
-
-    <div id="compressed-message" <% if (!isCompressed) { %>
-      style="display: none;"<% } %>>
-      <button id="compress-another">Compress Another</button>
-      <p>Your image has been magically compressed and saved! ✨</p>
     </div>
 
     <script>
