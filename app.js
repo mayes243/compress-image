@@ -36,14 +36,6 @@ app.get("/", function (req, res) {
 app.post("/compress-image", function (req, res) {
   const image = req.files.image;
   if (image.size > 0) {
-    // Ensure temp-uploads directory exists
-    if (!fs.existsSync("./temp-uploads")) {
-      fs.mkdirSync("./temp-uploads");
-    }
-
-    if (!fs.existsSync("./uploads")) {
-      fs.mkdirSync("./uploads");
-    }
     if (image.type == "image/png" || image.type == "image/jpeg") {
       fs.readFile(image.path, function (error, data) {
         if (error) throw error;
@@ -52,6 +44,15 @@ app.post("/compress-image", function (req, res) {
         const compression = 60;
 
         const filePath = "/temp-uploads/" + new Date().getTime() + "-" + image.name;
+
+        // Ensure temp-uploads directory exists
+        if (!fs.existsSync("/temp-uploads")) {
+          fs.mkdirSync("/temp-uploads");
+        }
+
+        if (!fs.existsSync("/uploads")) {
+          fs.mkdirSync("/uploads");
+        }
 
         fs.writeFile(filePath, data, async function (error) {
           if (error) throw error;
