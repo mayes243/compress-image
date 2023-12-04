@@ -20,7 +20,7 @@ app.use("/public", express.static(path.resolve()));
 
 app.get("/", function (request, result) {
   const isCompressed = request.query.isCompressed === "true";
-  const compressedImagePath = "public/" + request.query.compressedPath;
+  const compressedImagePath = "public" + request.query.compressedPath;
   const originalSize = request.query.originalSize;
   const compressedSize = request.query.compressedSize;
   const percent = request.query.percent;
