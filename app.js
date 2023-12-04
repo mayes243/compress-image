@@ -37,12 +37,12 @@ app.post("/compress-image", function (req, res) {
   const image = req.files.image;
   if (image.size > 0) {
     // Ensure temp-uploads directory exists
-    if (!fs.existsSync("/temp-uploads")) {
-      fs.mkdirSync("/temp-uploads");
+    if (!fs.existsSync("./temp-uploads")) {
+      fs.mkdirSync("./temp-uploads");
     }
 
-    if (!fs.existsSync("/uploads")) {
-      fs.mkdirSync("/uploads");
+    if (!fs.existsSync("./uploads")) {
+      fs.mkdirSync("./uploads");
     }
     if (image.type == "image/png" || image.type == "image/jpeg") {
       fs.readFile(image.path, function (error, data) {
