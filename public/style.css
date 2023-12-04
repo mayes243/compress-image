@@ -1,3 +1,4 @@
+/* styles.css */
 body {
   font-family: "Arial", sans-serif;
   background-color: #f4f4f4;
@@ -44,4 +45,34 @@ p {
   color: #333;
   font-size: 18px;
   margin-bottom: 15px;
+}
+
+/* Hide the default file input */
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-input {
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #3498db;
+  border: 1px solid #2980b9;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.custom-file-input:hover {
+  background-color: #2980b9;
+}
+
+.custom-file-input:active {
+  background-color: #1f618d;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
 }
