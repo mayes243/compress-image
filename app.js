@@ -20,14 +20,14 @@ app.set("view engine", "ejs");
 
 app.use("/public", express.static(path.resolve()));
 
-app.get("/", function (request, result) {
-  const isCompressed = request.query.isCompressed === "true";
-  const compressedImagePath = "public/" + request.query.compressedPath;
-  const originalSize = request.query.originalSize;
-  const compressedSize = request.query.compressedSize;
-  const percent = request.query.percent;
+app.get("/", function (req, res) {
+  const isCompressed = req.query.isCompressed === "true";
+  const compressedImagePath = "public/" + req.query.compressedPath;
+  const originalSize = req.query.originalSize;
+  const compressedSize = req.query.compressedSize;
+  const percent = req.query.percent;
 
-  result.render("index", {
+  res.render("index", {
     isCompressed,
     compressedImagePath,
     originalSize,
@@ -36,8 +36,8 @@ app.get("/", function (request, result) {
   });
 });
 
-app.post("/compressImage", function (request, result) {
-  const image = request.files.image;
+app.post("/compressImage", function (req, res) {
+  const image = req.files.image;
   if (image.size > 0) {
     if (image.type == "image/png" || image.type == "image/jpeg") {
       fileSystem.readFile(image.path, function (error, data) {
@@ -84,7 +84,7 @@ app.post("/compressImage", function (request, result) {
               fileSystem.unlink(filePath, function (error) {
                 if (error) throw error;
               });
-              result.redirect(
+              res.redirect(
                 `/?isCompressed=true&compressedPath=${statistic.path_out_new}&originalSize=${statistic.size_in}&compressedSize=${statistic.size_output}&percent=${statistic.percent}`
               );
             }
@@ -96,10 +96,10 @@ app.post("/compressImage", function (request, result) {
         });
       });
     } else {
-      result.send("Please select an image");
+      res.send("Please select an image");
     }
   } else {
-    result.send("Please select an image");
+    res.send("Please select an image");
   }
 });
 
